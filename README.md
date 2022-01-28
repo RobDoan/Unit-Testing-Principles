@@ -208,7 +208,7 @@ To evaluate how well a test scores on the metric of resisting to refactoring, yo
 Example:
 
 ```Ruby
-  def take_x_character(x)
+  def take_x_character(str, x)
     str.slice(0, x)
   end
 
@@ -216,14 +216,14 @@ Example:
   test "take_x_character" do
     a_str = 'aaaa'
     a_str.expects(:slice).with(0, 3).returns("cds").once
-    assert_equal "cds", take_x_character(3)
+    assert_equal "cds", take_x_character(a_str, 3)
   end
 ```
 
 after 3 days, you decide to refactor your code as following. And the test failed.
 
 ```Ruby
-  def take_x_character(x)
+  def take_x_character(str, x)
     str[0..(x-1)]
   end
 ```
