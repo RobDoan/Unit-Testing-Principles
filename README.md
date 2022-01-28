@@ -181,3 +181,50 @@ This test has both code and branch coverage metrics showing 100%. But at the sam
 
 
 [A story from the author of the book](./Story1.md)
+
+
+## Chapter 4. The four pillars of a good unit test
+
+- Protection against regressions
+- Resistance to refactoring
+- Fast feedback
+- Maintainability
+
+### Protection against regressions
+
+- Note that it’s not only the amount of code that matters, but also its complexity and domain significance. Code that represents complex business logic is more important than boilerplate code—bugs in business-critical functionality are the most damaging.
+
+- Furthermore, in addition to your code, the code you didn’t write also counts: for example, libraries, frameworks, and any external systems used in the project. That code influences the working of your software almost as much as your own code. For the best protection, the test must include those libraries, frameworks, and external systems in the testing scope, in order to check that the assumptions your software makes about these dependencies are correct.
+
+### Resistance to refactoring
+
+The second attribute of a good unit test is resistance to refactoring—the degree to which a test can sustain a refactoring of the underlying application code without turning red (failing).
+
+This situation is called a false positive. A false positive is a false alarm. It’s a result indicating that the test fails, although in reality, the functionality it covers works as intended.
+
+To evaluate how well a test scores on the metric of resisting to refactoring, you need to look at how many false positives the test generates. The fewer, the better.
+
+Example:
+
+```Ruby
+  def take_x_character(x)
+    str.slice(0, x)
+  end
+
+  # a bad test code
+  test "take_x_character" do
+    a_str = 'aaaa'
+    a_str.expects(:slice).with(0, 3).returns("cds").once
+    assert_equal "cds", take_x_character(3)
+  end
+```
+
+after 3 days, you decide to refactor your code as following. And the test failed.
+
+```Ruby
+  def take_x_character(x)
+    str[0..(x-1)]
+  end
+```
+
+[A story from the trenches](./Story2.md)
