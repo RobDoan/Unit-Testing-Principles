@@ -47,6 +47,7 @@ Example:
 ```
 
 _1 Covered by the test_
+
 _2 Not covered by the test_
 
 This gives us 4/5 = 0.8 = 80% code coverage.
